@@ -1,0 +1,6 @@
+mvn io.quarkus:quarkus-maven-plugin:${QUARKUS_VERSION}:create \
+  -DprojectGroupId="com.redhat.gramola.gateway" \
+  -DprojectArtifactId="gateway" \
+  -DprojectVersion="0.0.1-SNAPSHOT" \
+  -DclassName="ApiResource" \
+  -Dpath="api"
