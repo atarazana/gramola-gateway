@@ -27,7 +27,7 @@ public class ApiImpl implements ApiResource {
     
     @Override
     public List<Event> eventsGetAll() {
-        logger.debug("eventsGetAll was called");
+        logger.debug("eventsGetAll was called!");
         return eventsService.allEvents();
     }
 
