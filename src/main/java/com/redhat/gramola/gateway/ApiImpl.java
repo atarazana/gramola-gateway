@@ -42,9 +42,8 @@ public class ApiImpl implements ApiResource {
     }
 
     @Override
-    public String filesGet(String fileId) {
-        // TODO Auto-generated method stub
-        return null;
+    public Response filesGet(String fileId) {
+        return eventsService.filesGet(fileId);
     }
 
     @Override

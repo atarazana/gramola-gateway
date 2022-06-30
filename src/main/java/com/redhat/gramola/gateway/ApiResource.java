@@ -12,6 +12,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
@@ -44,8 +45,8 @@ public interface ApiResource {
 
   @Path("files/{fileId}")
   @GET
-  @Produces({"image/png", "image/jpeg"})
-  String filesGet(@PathParam("fileId") String fileId);
+  @Produces(MediaType.APPLICATION_OCTET_STREAM)
+  Response filesGet(@PathParam("fileId") String fileId);
 
   @Path("files/upload")
   @POST
