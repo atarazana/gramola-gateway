@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.redhat.gramola.gateway.beans.Event;
+import com.redhat.gramola.gateway.beans.Status;
 
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
@@ -37,4 +38,9 @@ public interface EventsService {
     @GET
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     Response filesGet(@PathParam("fileName") String fileId);
+
+    @GET
+    @Path("q/health")
+    @Produces("application/json")
+    Status health();
 }

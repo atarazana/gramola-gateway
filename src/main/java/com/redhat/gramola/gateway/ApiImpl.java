@@ -5,9 +5,12 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
+import com.redhat.gramola.gateway.beans.Check;
+import com.redhat.gramola.gateway.beans.Config;
 import com.redhat.gramola.gateway.beans.Event;
 import com.redhat.gramola.gateway.beans.FileResponse;
 import com.redhat.gramola.gateway.beans.FileUpload;
+import com.redhat.gramola.gateway.beans.Status;
 import com.redhat.gramola.gateway.beans.TimelineEntry;
 import com.redhat.gramola.gateway.restclient.EventsService;
 
@@ -17,6 +20,9 @@ import org.jboss.logging.Logger;
 
 public class ApiImpl implements ApiResource {
     Logger logger = Logger.getLogger(ApiImpl.class);
+
+    @ConfigProperty(name = "config.service.name", defaultValue = "gramola-gateway-svc")
+    String configServiceName;
 
     @ConfigProperty(name = "gramola.welcome-message", defaultValue = "Welcome")
     String welcome;
@@ -62,6 +68,26 @@ public class ApiImpl implements ApiResource {
     public List<TimelineEntry> timelineGetByEventIdAndUserId(String eventId, String userId) {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    @Override
+    public Config configGet() {
+        Check[] checks = new Check[0];
+        String status = "OPERATIONAL";
+        try {
+            Status eventServiceStatus = eventsService.health();
+            logger.debug(eventServiceStatus);
+            checks = eventServiceStatus.getChecks();
+            if (eventServiceStatus.getStatus() != "UP") {
+                status = "DEGRADED";
+            }
+        } catch (Exception e) {
+            status = "DEGRADED";
+            checks = new Check[1];
+            checks[0] = new Check("event-service", "DOWN");
+        }
+        
+        return new Config(configServiceName, new Status(status, checks));
     }
     
 }
