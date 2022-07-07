@@ -40,6 +40,11 @@ public interface EventsService {
     Response filesGet(@PathParam("fileName") String fileId);
 
     @GET
+    @Path("events/info/name")
+    @Produces("text/plain")
+    String serviceName();
+
+    @GET
     @Path("q/health")
     @Produces("application/json")
     Status health();

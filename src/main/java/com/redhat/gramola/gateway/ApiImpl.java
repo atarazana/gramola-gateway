@@ -77,12 +77,14 @@ public class ApiImpl implements ApiResource {
         try {
             Status eventServiceStatus = eventsService.health();
             logger.debug(String.format("EventService status: %s checks: %s",eventServiceStatus.getStatus(), eventServiceStatus.getChecks()));
+            String eventsServiceName = eventsService.serviceName();
+            logger.debug(String.format("EventService name: %s",eventsServiceName));
             checks = eventServiceStatus.getChecks();
             if (!"UP".equals(eventServiceStatus.getStatus())) {
                 status = "DEGRADED";
-                checks[0] = new Check("event-service", "DOWN");
+                checks[0] = new Check(eventsServiceName, "DOWN");
             } else {
-                checks[0] = new Check("event-service", "UP");
+                checks[0] = new Check(eventsServiceName, "UP");
             }
         } catch (Exception e) {
             status = "DEGRADED";
