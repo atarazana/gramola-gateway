@@ -80,6 +80,9 @@ public class ApiImpl implements ApiResource {
             checks = eventServiceStatus.getChecks();
             if (!"UP".equals(eventServiceStatus.getStatus())) {
                 status = "DEGRADED";
+                checks[0] = new Check("event-service", "DOWN");
+            } else {
+                checks[0] = new Check("event-service", "UP");
             }
         } catch (Exception e) {
             status = "DEGRADED";
