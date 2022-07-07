@@ -76,9 +76,9 @@ public class ApiImpl implements ApiResource {
         String status = "OPERATIONAL";
         try {
             Status eventServiceStatus = eventsService.health();
-            logger.debug(eventServiceStatus);
+            logger.debug(String.format("EventService status: %s checks: %s",eventServiceStatus.getStatus(), eventServiceStatus.getChecks()));
             checks = eventServiceStatus.getChecks();
-            if (eventServiceStatus.getStatus() != "UP") {
+            if (!"UP".equals(eventServiceStatus.getStatus())) {
                 status = "DEGRADED";
             }
         } catch (Exception e) {
