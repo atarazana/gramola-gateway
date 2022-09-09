@@ -12,7 +12,7 @@ public class ApiResourceTest {
     @Test
     public void testHelloEndpoint() {
         given()
-          .when().get("/api")
+          .when().get("/api/config")
           .then()
              .statusCode(200)
             //  .body(is("Hello RESTEasy"))
